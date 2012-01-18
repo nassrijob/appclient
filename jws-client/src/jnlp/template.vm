@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0+" codebase="http://localhost" href="$outputFile">
+ <information>
+    <title>JWS ApplClient</title>
+    <vendor>Red Hat GPS</vendor>
+    <homepage href="http://www.jboss.com/"/>
+    <description kind="one-line">JWS AppClient</description>
+    <description kind="short">JWS AppClient - Java Web Start Test Application Client</description>
+    <description kind="tooltip">JWS AppClient - Java Web Start Test Application Client</description>
+ </information>
+ <security>
+ <all-permissions/>
+ </security>
+ <resources>
+    <j2se version="1.6+" initial-heap-size="32m" max-heap-size="128m" />
+    <property name="jnlp.versionEnabled" value="true"/>
+    $dependencies
+ </resources>
+ <application-desc main-class="$mainClass">
+ </application-desc>
+</jnlp>

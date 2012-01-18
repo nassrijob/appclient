@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>appclient</artifactId>
+		<groupId>se.redhat.demo</groupId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<groupId>se.redhat.demo.appclient</groupId>
+	<artifactId>jws-client</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<properties>
+		<!-- The server URL where the web start application will be deployed -->
+		<keystore.location>${project.baseUri}/jws-client.jks</keystore.location>
+		<keystore.password>password</keystore.password>
+		<keystore.keypassword>password</keystore.keypassword>
+		<keystore.alias>jws-client</keystore.alias>
+	</properties>
+	<repositories>
+		<repository>
+			<id>JBOSS_NEXUS</id>
+			<url>http://repository.jboss.org/nexus/content/groups/public</url>
+		</repository>
+	</repositories>
+	<build>
+		<finalName>jws-client</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>webstart-maven-plugin</artifactId>
+				<version>1.0-alpha-1</version>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>webstart-maven-plugin</artifactId>
+					<configuration>
+						<jnlp>
+							<mainClass>se.redhat.demo.appclient.RichClientMain</mainClass>
+						</jnlp>
+						<sign>
+							<keystore>${keystore.location}</keystore>
+							<keypass>${keystore.password}</keypass>
+							<storepass>${keystore.keypassword}</storepass>
+							<storetype>jks</storetype>
+							<alias>${keystore.alias}</alias>
+							<verify>true</verify>
+						</sign>
+						<verbose>true</verbose>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	<dependencies>
+
+		<dependency>
+			<groupId>se.redhat.demo.appclient</groupId>
+			<artifactId>server</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.spec.javax.transaction</groupId>
+			<artifactId>jboss-transaction-api_1.1_spec</artifactId>
+			<version>1.0.1.Beta1</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- Import the EJB 3.1 API, we use runtime scope because we aren't using 
+			any direct reference to EJB spec API in our client code -->
+		<dependency>
+			<groupId>org.jboss.spec.javax.ejb</groupId>
+			<artifactId>jboss-ejb-api_3.1_spec</artifactId>
+			<version>1.0.1.Final</version>
+			<scope>runtime</scope>
+		</dependency>
+
+
+		<!-- JBoss EJB client API jar. We use runtime scope because the EJB client 
+			API isn't directly used in this example. We just need it in our runtime classpath -->
+		<dependency>
+			<groupId>org.jboss</groupId>
+			<artifactId>jboss-ejb-client</artifactId>
+			<version>1.0.0.Beta9</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- client communications with the server use XNIO -->
+		<dependency>
+			<groupId>org.jboss.xnio</groupId>
+			<artifactId>xnio-api</artifactId>
+			<version>3.0.0.CR5</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.xnio</groupId>
+			<artifactId>xnio-nio</artifactId>
+			<version>3.0.0.CR5</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- The client needs JBoss remoting to access the server -->
+		<dependency>
+			<groupId>org.jboss.remoting3</groupId>
+			<artifactId>jboss-remoting</artifactId>
+			<version>3.2.0.CR6</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- Remote EJB accesses can be secured -->
+		<dependency>
+			<groupId>org.jboss.sasl</groupId>
+			<artifactId>jboss-sasl</artifactId>
+			<version>1.0.0.Beta9</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- data serialization for invoking remote EJBs -->
+		<dependency>
+			<groupId>org.jboss.marshalling</groupId>
+			<artifactId>jboss-marshalling-river</artifactId>
+			<version>1.3.0.GA</version>
+			<scope>runtime</scope>
+		</dependency>
+	</dependencies>
+</project>
